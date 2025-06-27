@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="FireApplications/App.axaml" value="FireApplications/FireApplications.csproj" />
+        <entry key="FireApplications/Views/ApplicationsView.axaml" value="FireApplications/FireApplications.csproj" />
+        <entry key="FireApplications/Views/MainWindow.axaml" value="FireApplications/FireApplications.csproj" />
+        <entry key="FireApplications/Views/MembersWindow.axaml" value="FireApplications/FireApplications.csproj" />
+        <entry key="FireApplications/Views/RequestsWindow.axaml" value="FireApplications/FireApplications.csproj" />
+        <entry key="FireApplications/Views/SettingsWindow.axaml" value="FireApplications/FireApplications.csproj" />
+        <entry key="FireApplications/Views/WelcomeView.axaml" value="FireApplications/FireApplications.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

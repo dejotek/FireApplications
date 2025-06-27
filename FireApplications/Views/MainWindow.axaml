@@ -1,0 +1,77 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:FireApplications.ViewModels"
+        xmlns:views="clr-namespace:FireApplications.Views"
+        x:Class="FireApplications.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Generator wniosków" Width="1100" Height="700">
+  
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+
+    <!-- Mapowanie ViewModel → UserControl -->
+    <Window.DataTemplates>
+        <DataTemplate DataType="{x:Type vm:ApplicationsViewModel}">
+            <views:ApplicationsView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:RequestsViewModel}">
+            <views:RequestsView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:MembersViewModel}">
+            <views:MembersView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+            <views:SettingsView/>
+        </DataTemplate>
+    </Window.DataTemplates>
+
+    <DockPanel Margin="20">
+        <!-- Nagłówek / przyciski -->
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
+            <Button Content="Wnioski"                Command="{Binding ShowApplicationsCommand}" Height="50" Width="225" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" CornerRadius="8" Cursor="Hand" Background="#3C6FD2" Foreground="White">
+                <Button.Effect>
+                    <DropShadowEffect
+                        Color="#33636363"
+                        BlurRadius="8"
+                        OffsetX="0"
+                        OffsetY="2"
+                        Opacity="1" />
+                </Button.Effect>
+            </Button>
+            <Button Content="Generowanie wniosków"   Command="{Binding ShowRequestsCommand}"     Height="50" Width="225" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" CornerRadius="8" Cursor="Hand" Background="#3C6FD2" Foreground="White">
+                <Button.Effect>
+                    <DropShadowEffect
+                        Color="#33636363"
+                        BlurRadius="8"
+                        OffsetX="0"
+                        OffsetY="2"
+                        Opacity="1" />
+                </Button.Effect>
+            </Button>
+            <Button Content="Zarządzanie członkami"  Command="{Binding ShowMembersCommand}"      Height="50" Width="225" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" CornerRadius="8" Cursor="Hand" Background="#3C6FD2" Foreground="White">
+                <Button.Effect>
+                    <DropShadowEffect
+                        Color="#33636363"
+                        BlurRadius="8"
+                        OffsetX="0"
+                        OffsetY="2"
+                        Opacity="1" />
+                </Button.Effect>
+            </Button>
+            <Button Content="Ustawienia"             Command="{Binding ShowSettingsCommand}"     Height="50" Width="225" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" CornerRadius="8" Cursor="Hand" Background="#3C6FD2" Foreground="White">
+                <Button.Effect>
+                    <DropShadowEffect
+                        Color="#33636363"
+                        BlurRadius="8"
+                        OffsetX="0"
+                        OffsetY="2"
+                        Opacity="1" />
+                </Button.Effect>
+            </Button>
+        </StackPanel>
+
+        <!-- Tu ładowany jest aktualny widok -->
+        <ContentControl Content="{Binding CurrentView}" Margin="0,20,0,0"/>
+    </DockPanel>
+</Window>

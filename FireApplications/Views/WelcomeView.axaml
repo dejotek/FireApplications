@@ -1,0 +1,39 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:FireApplications.ViewModels"
+             x:Class="FireApplications.Views.WelcomeView"
+             x:DataType="vm:WelcomeViewModel">
+
+    <Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 100" Spacing="100">
+            <Image Width="300" Source="./../Assets/znak_zosp.jpg" />
+            <StackPanel Margin="0 40 0 0">
+                <TextBlock Text="{Binding Message}"
+                           FontSize="28"
+                           FontWeight="SemiBold"
+                           Foreground="#222"
+                           Margin="0 0 0 30"
+                           />
+                <TextBlock Text="Generator wniosków dla Ochotniczych Straży Pożarnych"
+                           FontSize="16"
+                           Foreground="#333"
+                />
+                <TextBlock Text="automatyzujący proces tworzenia wniosków o ekwiwalent."
+                           FontSize="16"
+                           Foreground="#333"
+                           Margin="0 0 0 40"
+                />
+                <Button Content="Wygeneruj wniosek" Command="{Binding ShowRequestsCommand}" Margin="0 20 20 0" Height="50" Width="250" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" HorizontalAlignment="Right" CornerRadius="8" Cursor="Hand" Background="#3C6FD2" Foreground="White">
+                    <Button.Effect>
+                        <DropShadowEffect
+                            Color="#33636363"
+                            BlurRadius="8"
+                            OffsetX="0"
+                            OffsetY="2"
+                            Opacity="1" />
+                    </Button.Effect>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
