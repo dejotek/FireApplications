@@ -8,10 +8,16 @@ using System.Text.Json;
 using System.Text.Unicode;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
 using FireApplications.Helpers;
 using FireApplications.Models;
-using PdfSharpCore.Drawing;
+using PdfSharpCore;
 using PdfSharpCore.Pdf;
+using RazorLight;
+using RazorLight.Razor;
+using HtmlRendererCore.PdfSharp; 
+using AvaloniaUI.PrintToPDF;
 
 namespace FireApplications.ViewModels
 {
@@ -22,8 +28,22 @@ namespace FireApplications.ViewModels
         public string Title => "Generowanie wniosków";
 
         // Formularz
-        public string Address     { get; set; } = "";
-        public string Duration    { get; set; } = "";
+        public string Address { get; set; } = "";
+        public string Duration { get; set; } = "";
+        
+        private DateTimeOffset? _eventDate = DateTimeOffset.Now;
+        public DateTimeOffset? EventDate
+        {
+            get => _eventDate;
+            set
+            {
+                if (_eventDate != value)
+                {
+                    _eventDate = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private string _searchText = "";
         public string SearchText
@@ -115,72 +135,83 @@ namespace FireApplications.ViewModels
             if (ff == null) return;
             SelectedMembers.Remove(ff);
         }
-
-        private async Task GenerateReportAsync()
+        
+        public async Task GenerateReportAsync()
+{
+    try
+    {
+        // 1) Przygotuj model
+        var model = new EquivalentApplication
         {
-            try
-            {
-                // 1) Tworzenie PDF
-                var desktop  = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-                var fileName = Path.Combine(desktop, $"wniosek_{DateTime.Now:yyyyMMdd_HHmmss}.pdf");
+            Address     = Address,
+            Duration    = Duration,
+            Members     = SelectedMembers
+                            .Select(f => $"{f.LastName} {f.FirstName}")
+                            .ToList(),
+            GeneratedAt = DateTime.Now
+        };
 
-                var doc = new PdfDocument();
-                var page = doc.AddPage();
-                var gfx = XGraphics.FromPdfPage(page);
-                var font = new XFont("Verdana", 12, XFontStyle.Regular);
+        // 2) Wczytaj CSS i inline’uj
+        var baseDir = AppContext.BaseDirectory;
+        var cssPath = Path.Combine(baseDir, "Templates", "styles.css");
+        var css     = File.Exists(cssPath)
+                        ? File.ReadAllText(cssPath, Encoding.UTF8)
+                        : "";
 
-                double y = 40;
-                void Draw(string s)
-                {
-                    gfx.DrawString(s, font, XBrushes.Black, new XPoint(40, y));
-                    y += 25;
-                    if (y > page.Height - 40)
-                    {
-                        page = doc.AddPage();
-                        gfx  = XGraphics.FromPdfPage(page);
-                        y    = 40;
-                    }
-                }
+        // 3) Skonfiguruj RazorLight z folderu Templates
+        var templatesDir = Path.Combine(baseDir, "Templates");
+        var engine = new RazorLightEngineBuilder()
+            .UseFileSystemProject(templatesDir)
+            .UseMemoryCachingProvider()
+            .Build();
 
-                Draw($"Adres zdarzenia: {Address}");
-                Draw($"Czas trwania: {Duration}");
-                Draw("Wybrani członkowie:");
-                foreach (var ff in SelectedMembers)
-                    Draw($"• {ff.FirstName} {ff.LastName}");
+        // 4) Renderuj tylko ciało (<body>…) szablonu
+        string bodyHtml = await engine.CompileRenderAsync("doc.cshtml", model);
 
-                doc.Save(fileName);
+        // 5) Zbuduj pełny HTML z inline CSS
+        string fullHtml =
+            "<!DOCTYPE html><html><head><meta charset=\"utf-8\">" +
+            "<style>" + css + "</style>" +
+            "</head><body>" + bodyHtml + "</body></html>";
 
-                // 2) Toast sukcesu
-                NotificationMessage = "Wygenerowano wniosek";
-                ShowNotification     = true;
-                
-                var app = new EquivalentApplication
-                {
-                    Address       = Address,
-                    Duration      = Duration,
-                    Members       = SelectedMembers
-                        .Select(f => $"{f.FirstName} {f.LastName}")
-                        .ToList(),
-                    GeneratedAt   = DateTime.Now
-                };
+        // 6) Dump debug.html
+        File.WriteAllText(Path.Combine(baseDir, "debug.html"), fullHtml, Encoding.UTF8);
 
-                // zakładamy, że masz singleton lub możesz utworzyć VM:
-                var appsVm = new ApplicationsViewModel();
-                appsVm.Add(app);
+        // 7) Generuj PDF
+        var config = new PdfGenerateConfig
+        {
+            PageSize     = PageSize.A4,
+            MarginTop    = 40,
+            MarginBottom = 40,
+            MarginLeft   = 40,
+            MarginRight  = 40
+        };
+        PdfDocument pdf = PdfGenerator.GeneratePdf(fullHtml, config);
 
-                // 3) Czekaj 3 sekundy
-                await Task.Delay(3000);
-            }
-            catch
-            {
-                NotificationMessage = "Błąd przy generowaniu";
-                ShowNotification     = true;
-                await Task.Delay(3000);
-            }
-            finally
-            {
-                ShowNotification = false;
-            }
-        }
+        // 8) Zapisz na pulpicie
+        var desktop  = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+        var fileName = Path.Combine(desktop, $"wniosek_{DateTime.Now:yyyyMMdd_HHmmss}.pdf");
+        pdf.Save(fileName);
+
+        // 9) Toast sukcesu
+        NotificationMessage = "Wygenerowano wniosek";
+        ShowNotification     = true;
+        await Task.Delay(3000);
+        ShowNotification     = false;
+    }
+    catch (Exception ex)
+    {
+        // W razie błędu pokaż dokładny komunikat
+        NotificationMessage = "Błąd: " + ex.Message;
+        ShowNotification     = true;
+        await Task.Delay(3000);
+        ShowNotification     = false;
+    }
+}
+
+
+        
+
+
     }
 }

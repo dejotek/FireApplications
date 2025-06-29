@@ -1,0 +1,928 @@
+﻿@using System
+@using System.IO
+@using System.Text
+@using System.Linq
+
+@{
+    // Basowa ścieżka do katalogu z EXE
+    // var baseDir = AppContext.BaseDirectory;
+    // var cssPath = System.IO.Path.Combine(baseDir, "Templates", "styles.css");
+    //
+    // var styles = File.Exists(cssPath)
+    //     ? File.ReadAllText(cssPath, Encoding.UTF8)
+    //     : "";
+
+    var dots = string.Concat(System.Linq.Enumerable.Repeat(" . ", 25));
+    var fireBrigadeName = "Ochotnicza Straż Pożarna Bielsko-Biała Kamienica";
+    
+    var duration = Model.Duration;
+
+    var isRescue = true;
+    var isTraining = false;
+
+    var isCity = true;
+    var isStateFireBrigade = false;
+
+    var hasAddress = Model.Address != null && Model.Address.Trim().Length > 0;
+}
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html">
+        <style>
+            .lst-kix_list_2-6 > li:before {
+                content: " "
+            }
+
+            .lst-kix_list_2-7 > li:before {
+                content: " "
+            }
+
+            ol.lst-kix_list_1-0 {
+                list-style-type: none
+            }
+
+            .lst-kix_list_2-4 > li:before {
+                content: " "
+            }
+
+            .lst-kix_list_2-5 > li:before {
+                content: " "
+            }
+
+            .lst-kix_list_2-8 > li:before {
+                content: " "
+            }
+
+            ol.lst-kix_list_2-0 {
+                list-style-type: none
+            }
+
+            ul.lst-kix_list_2-8 {
+                list-style-type: none
+            }
+
+            ul.lst-kix_list_1-3 {
+                list-style-type: none
+            }
+
+            ul.lst-kix_list_2-2 {
+                list-style-type: none
+            }
+
+            .lst-kix_list_1-0 > li:before {
+                content: "" counter(lst-ctn-kix_list_1-0,decimal) ". "
+            }
+
+            ul.lst-kix_list_1-4 {
+                list-style-type: none;
+            }
+
+            ul.lst-kix_list_2-3 {
+                list-style-type: none;
+            }
+
+            ul.lst-kix_list_1-1 {
+                list-style-type: none;
+            }
+
+            ul.lst-kix_list_1-2 {
+                list-style-type: none;
+            }
+
+            ul.lst-kix_list_2-1 {
+                list-style-type: none;
+            }
+
+            ul.lst-kix_list_1-7 {
+                list-style-type: none;
+            }
+
+            ul.lst-kix_list_2-6 {
+                list-style-type: none;
+            }
+
+            .lst-kix_list_1-1 > li:before {
+                content: " ";
+            }
+
+            .lst-kix_list_1-2 > li:before {
+                content: " ";
+            }
+
+            ul.lst-kix_list_1-8 {
+                list-style-type: none;
+            }
+
+            ol.lst-kix_list_2-0.start {
+                counter-reset: lst-ctn-kix_list_2-0 0;
+            }
+
+            ul.lst-kix_list_2-7 {
+                list-style-type: none;
+            }
+
+            ul.lst-kix_list_1-5 {
+                list-style-type: none;
+            }
+
+            ul.lst-kix_list_2-4 {
+                list-style-type: none;
+            }
+
+            ul.lst-kix_list_1-6 {
+                list-style-type: none;
+            }
+
+            ul.lst-kix_list_2-5 {
+                list-style-type: none;
+            }
+
+            .lst-kix_list_1-3 > li:before {
+                content: " ";
+            }
+
+            .lst-kix_list_1-4 > li:before {
+                content: " ";
+            }
+
+            ol.lst-kix_list_1-0.start {
+                counter-reset: lst-ctn-kix_list_1-0 0;
+            }
+
+            .lst-kix_list_1-0 > li {
+                counter-increment: lst-ctn-kix_list_1-0;
+            }
+
+            .lst-kix_list_2-0 > li {
+                counter-increment: lst-ctn-kix_list_2-0;
+            }
+
+            li.li-bullet-1:before {
+                margin-left: -0.6pt;
+                white-space: nowrap;
+                display: inline-block;
+                min-width: 0.6pt;
+            }
+
+            .lst-kix_list_1-7 > li:before {
+                content: " ";
+            }
+
+            .lst-kix_list_1-5 > li:before {
+                content: " ";
+            }
+
+            .lst-kix_list_1-6 > li:before {
+                content: " ";
+            }
+
+            li.li-bullet-0:before {
+                margin-left: -0.8pt;
+                white-space: nowrap;
+                display: inline-block;
+                min-width: 0.8pt;
+            }
+
+            li.li-bullet-2:before {
+                margin-left: -15.8pt;
+                white-space: nowrap;
+                display: inline-block;
+                min-width: 15.8pt;
+            }
+
+            .lst-kix_list_2-0 > li:before {
+                content: "" counter(lst-ctn-kix_list_2-0,lower-latin) ") ";
+            }
+
+            .lst-kix_list_2-1 > li:before {
+                content: " ";
+            }
+
+            .lst-kix_list_1-8 > li:before {
+                content: " ";
+            }
+
+            .lst-kix_list_2-2 > li:before {
+                content: " ";
+            }
+
+            .lst-kix_list_2-3 > li:before {
+                content: " ";
+            }
+
+            ol {
+                margin: 0;
+                padding: 0;
+            }
+
+            table td, table th {
+                padding: 0;
+            }
+
+            .c11 {
+                border-right-style: solid;
+                border-bottom-color: #000000;
+                border-top-width: 1pt;
+                border-right-width: 1pt;
+                border-left-color: #000000;
+                vertical-align: middle;
+                border-right-color: #000000;
+                border-left-width: 1pt;
+                border-top-style: solid;
+                border-left-style: solid;
+                border-bottom-width: 1pt;
+                width: 113.4pt;
+                border-top-color: #000000;
+                border-bottom-style: solid;
+            }
+
+            .c20 {
+                border-right-style: solid;
+                border-bottom-color: #000000;
+                border-top-width: 1pt;
+                border-right-width: 1pt;
+                border-left-color: #000000;
+                vertical-align: middle;
+                border-right-color: #000000;
+                border-left-width: 1pt;
+                border-top-style: solid;
+                border-left-style: solid;
+                border-bottom-width: 1pt;
+                width: 18.5pt;
+                border-top-color: #000000;
+                border-bottom-style: solid;
+            }
+
+            .c10 {
+                border-right-style: solid;
+                border-bottom-color: #000000;
+                border-top-width: 1pt;
+                border-right-width: 1pt;
+                border-left-color: #000000;
+                vertical-align: middle;
+                border-right-color: #000000;
+                border-left-width: 1pt;
+                border-top-style: solid;
+                border-left-style: solid;
+                border-bottom-width: 1pt;
+                width: 184.2pt;
+                border-top-color: #000000;
+                border-bottom-style: solid;
+            }
+
+            .c13 {
+                border-right-style: solid;
+                border-bottom-color: #000000;
+                border-top-width: 1pt;
+                border-right-width: 1pt;
+                border-left-color: #000000;
+                vertical-align: middle;
+                border-right-color: #000000;
+                border-left-width: 1pt;
+                border-top-style: solid;
+                border-left-style: solid;
+                border-bottom-width: 1pt;
+                width: 140.2pt;
+                border-top-color: #000000;
+                border-bottom-style: solid;
+            }
+
+            .c39 {
+                margin-left: 18pt;
+                padding-top: 0pt;
+                padding-left: -17.2pt;
+                padding-bottom: 0pt;
+                line-height: 1.5;
+                orphans: 2;
+                widows: 2;
+                text-align: left;
+            }
+
+            .c21 {
+                margin-left: 31.6pt;
+                padding-top: 0pt;
+                padding-left: -17.4pt;
+                padding-bottom: 0pt;
+                line-height: 1.5;
+                orphans: 2;
+                widows: 2;
+                text-align: justify;
+            }
+
+            .c5 {
+                color: #000000;
+                font-weight: 400;
+                text-decoration: none;
+                vertical-align: baseline;
+                font-size: 10pt;
+                font-family: "Arial";
+                font-style: normal;
+            }
+
+            .c3 {
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.5;
+                orphans: 2;
+                widows: 2;
+                text-align: center;
+                height: 12pt;
+            }
+
+            .c7 {
+                margin-left: 14.2pt;
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.5;
+                orphans: 2;
+                widows: 2;
+                text-align: justify;
+            }
+
+            .c1 {
+                color: #000000;
+                font-weight: 400;
+                text-decoration: none;
+                vertical-align: super;
+                font-size: 12pt;
+                font-family: "Arial";
+                font-style: normal;
+            }
+
+            .c0 {
+                color: #000000;
+                font-weight: 400;
+                text-decoration: none;
+                vertical-align: baseline;
+                font-size: 12pt;
+                font-family: "Arial";
+                font-style: normal;
+            }
+
+            .c12 {
+                margin-left: 184.3pt;
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                orphans: 2;
+                widows: 2;
+                text-align: right;
+            }
+
+            .c18 {
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                orphans: 2;
+                widows: 2;
+                text-align: center;
+                height: 12pt;
+            }
+
+            .c6 {
+                margin-left: 13.4pt;
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.5;
+                orphans: 2;
+                widows: 2;
+                text-align: justify;
+            }
+
+            .c4 {
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.5;
+                orphans: 2;
+                widows: 2;
+                text-align: justify;
+                height: 12pt;
+            }
+
+            .c9 {
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.5;
+                orphans: 2;
+                widows: 2;
+                text-align: center;
+            }
+
+            .c26 {
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.5;
+                orphans: 2;
+                widows: 2;
+                text-align: justify;
+            }
+
+            .c2 {
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                orphans: 2;
+                widows: 2;
+                text-align: left;
+            }
+
+            .c32 {
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                orphans: 2;
+                widows: 2;
+                text-align: right
+            }
+
+            .c23 {
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                orphans: 2;
+                widows: 2;
+                text-align: center
+            }
+
+            .c15 {
+                color: #000000;
+                text-decoration: none;
+                vertical-align: baseline;
+                font-size: 8pt;
+                font-style: normal
+            }
+
+            .c36 {
+                font-weight: 700;
+                vertical-align: baseline;
+                font-size: 16pt;
+                font-family: "Arial"
+            }
+
+            .c38 {
+                margin-left: -2.5pt;
+                border-spacing: 0;
+                border-collapse: collapse;
+                margin-right: auto
+            }
+
+            .c30 {
+                color: #000000;
+                text-decoration: none;
+                font-style: normal
+            }
+
+            .c33 {
+                background-color: #ffffff;
+                max-width: 453.6pt;
+            }
+
+            .c34 {
+                margin-left: 17.2pt;
+                padding-left: -2.2pt
+            }
+
+            .c16 {
+                padding: 0;
+                margin: 0
+            }
+
+            .c40 {
+                margin-left: 247.8pt;
+                text-indent: 35.4pt
+            }
+
+            .c14 {
+                font-weight: 400;
+                font-family: "Arial"
+            }
+
+            .c27 {
+                margin-left: 31.4pt;
+                padding-left: -17.2pt
+            }
+
+            .c35 {
+                margin-left: 36pt;
+                text-indent: -0.5pt
+            }
+
+            .c28 {
+                text-indent: -14.2pt
+            }
+
+            .c29 {
+                text-indent: 7.1pt
+            }
+
+            .c22 {
+                height: 12pt
+            }
+
+            .c37 {
+                font-size: 8pt
+            }
+
+            .c25 {
+                margin-left: 14.2pt
+            }
+
+            .c8 {
+                height: 28.4pt
+            }
+
+            .c24 {
+                vertical-align: super
+            }
+
+            .c31 {
+                height: 84.2pt
+            }
+
+            .c17 {
+                margin-left: 241pt
+            }
+
+            .c19 {
+                font-size: 10pt
+            }
+
+            .title {
+                padding-top: 24pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 36pt;
+                padding-bottom: 6pt;
+                font-family: "Times New Roman";
+                line-height: 1.0;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            .subtitle {
+                padding-top: 18pt;
+                color: #666666;
+                font-size: 24pt;
+                padding-bottom: 4pt;
+                font-family: "Georgia";
+                line-height: 1.0;
+                page-break-after: avoid;
+                font-style: italic;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            li {
+                color: #000000;
+                font-size: 12pt;
+                font-family: "Times New Roman"
+            }
+
+            p {
+                margin: 0;
+                color: #000000;
+                font-size: 12pt;
+                font-family: "Times New Roman"
+            }
+
+            h1 {
+                padding-top: 24pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 24pt;
+                padding-bottom: 6pt;
+                font-family: "Times New Roman";
+                line-height: 1.0;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            h2 {
+                padding-top: 18pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 18pt;
+                padding-bottom: 4pt;
+                font-family: "Times New Roman";
+                line-height: 1.0;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            h3 {
+                padding-top: 14pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 14pt;
+                padding-bottom: 4pt;
+                font-family: "Times New Roman";
+                line-height: 1.0;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            h4 {
+                padding-top: 12pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 12pt;
+                padding-bottom: 2pt;
+                font-family: "Times New Roman";
+                line-height: 1.0;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            h5 {
+                padding-top: 11pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 11pt;
+                padding-bottom: 2pt;
+                font-family: "Times New Roman";
+                line-height: 1.0;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            h6 {
+                padding-top: 10pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 10pt;
+                padding-bottom: 2pt;
+                font-family: "Times New Roman";
+                line-height: 1.0;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+
+
+            .c24 {
+                font-size: 10px;
+            }
+            
+            .deleted {
+                text-decoration: line-through;
+            }
+
+            @@page {
+                margin: 2.5cm;
+            }
+        </style>
+    </head>
+    <body class="c33 doc-content">
+        <p class="c12 c29">
+            <span class="c5">Załącznik Nr 1 do Zarządzenia Nr ON-II.0050.67.2024.ZK</span>
+        </p>
+        <p class="c12">
+            <span class="c5">Prezydenta Miasta Bielska-Białej</span>
+        </p>
+        <p class="c12">
+            <span class="c5">z dnia 24 stycznia 2024 r.</span>
+        </p>
+        <p class="c32 c22">
+            <span class="c0"></span>
+        </p>
+        <p class="c32 c22">
+            <span class="c0"></span>
+        </p>
+        <p class="c32">
+            <span class="c0">Bielsko-Biała, dnia @DateTime.Now.ToString("dd MMMM yyyy")</span>
+        </p>
+        <p class="c32 c22">
+            <span class="c0"></span>
+        </p>
+        <p class="c2">
+            <span class="c0">@dots</span>
+        </p>
+        <p class="c2" style="margin-inline-start: 50px; margin-block-start: 5px;">
+            <span class="c1" style="font-size: 10px">(Pieczęć Jednostki OSP)</span>
+        </p>
+        <p class="c2 c22">
+            <span class="c1"></span>
+        </p>
+        <p class="c2 c17">
+            <span class="c0">Urząd Miejski</span>
+        </p>
+        <p class="c2 c17">
+            <span class="c0">w Bielsku-Białej</span>
+        </p>
+        <p class="c2 c17">
+            <span class="c0">Wydział Zarządzania Kryzysowego</span>
+        </p>
+        <p class="c2 c22">
+            <span class="c0"></span>
+        </p>
+        <p class="c23" style="margin-block: 1cm">
+            <span class="c30 c36">WNIOSEK</span>
+        </p>
+        <p class="c2 c22">
+            <span class="c0"></span>
+        </p>
+        <p class="c26" id="h.gjdgxs">
+            <span class="c14">o wypłatę ekwiwalentu za udział w</span>
+            <span class="c14 @(@isRescue ? null : "deleted")">działaniu ratowniczym,</span>
+            <span class="c14 deleted">akcji ratowniczej, zabezpieczeniu obszaru chronionego właściwej jednostki ratowniczo-gaśniczej Państwowej Straży Pożarnej,</span>
+            <span class="c14 @(@isTraining ? null : "deleted")">szkoleniu, ćwiczeniu</span>
+            <span class="c14">organizowanym przez</span> 
+            <span class="c14 @(@isStateFireBrigade ? null : "deleted")">Państwową Straż Pożarną,</span>
+            <span class="c14 @(@isCity ? null : "deleted")">Miasto Bielsko-Biała lub inne uprawnione</span>
+            <span class="c1 c24">1/</span>
+        </p>
+        <p class="c4">
+            <span class="c15 c14"></span>
+        </p>
+        <ol class="c16 lst-kix_list_1-0 start" start="1">
+            <li class="c39 li-bullet-0">
+                <span class="c0">@fireBrigadeName</span>
+            </li>
+        </ol>
+        <p class="c6">
+            <span class="c14">na podstawie art. 15 ust. 1, 1a ustawy z dnia 17 grudnia 2021 r. o ochotniczych strażach pożarnych</span>
+            <span class="c14 c19">(Dz. U. z 2023 r poz. 194 )</span>
+            <span class="c14">przedstawia listę strażaków ratowników OSP,</span>
+            <span class="c14 deleted">kandydatów na strażaka ratownika OSP,</span> 
+            <span class="c14">którzy wzięli udział w:</span>
+        </p>
+        <ol class="c16 lst-kix_list_2-0 start" start="1">
+            <li class="c21 li-bullet-1 @(@isRescue ? null : "deleted")">
+                <span class="c14">działaniu ratowniczym,</span>
+                <span class="c14 deleted">akcji ratowniczej, zabezpieczeniu obszaru chronionego właściwej jednostki ratowniczo-gaśniczej Państwowej Straży Pożarnej,</span>
+                <span class="c14 c24">1/ </span>
+                @if (isRescue)
+                {
+                    @if (hasAddress)
+                    {
+                        @* <span class="c14">w dniu @Model.StartDate.ToString("dd MMMM yyyy") w @Model.Address, @Model.Description</span> *@
+                        <span class="c14">w dniu @Model.EventDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("pl-PL")) w @Model.Address, test</span>
+                    }
+                    else
+                    {
+                        @* <span class="c14">w dniu @Model.EventData.ToString("dd MMMM yyyy") w @Model._event.Description</span> *@
+                        <span class="c14">w dniu @Model.EventDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("pl-PL")) w Test</span>
+                    }
+                } 
+            </li>
+        </ol>
+        <ol class="c16 lst-kix_list_2-0" start="2">
+            <li class="c26 c27 li-bullet-0 @(!@isRescue ? null : "deleted")">
+                <span class="c14">szkoleniu, ćwiczeniu </span>
+                <span class="c14 c24">1/</span>
+                @if (!isRescue)
+                {
+                <span class="c0">
+                    w dniu @Model.EventDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("pl-PL"))
+                    organizowanym przez @( @isCity ? "Miasto Bielsko-Biała" : "Państwową Straż Pożarną")
+                </span>
+                }
+            </li>
+        </ol>
+        <ol class="c16 lst-kix_list_1-0" start="2" style="page-break-after: always">
+            <li class="c26 c34 li-bullet-2">
+                <span class="c14">
+                    Niżej wymienieni strażacy ratownicy OSP biorący udział w
+                </span>
+                <span class="c14 @(@isRescue ? null : "deleted")">
+                    działaniu ratowniczym,
+                </span>
+                <span class="c14 deleted">
+                    akcji ratowniczej, zabezpieczeniu obszaru chronionego właściwej jednostki ratowniczo-gaśniczej Państwowej Straży Pożarnej,
+                </span>
+                <span class="c14 @(@isTraining ? null : "deleted")">
+                    szkoleniu, ćwiczeniu,
+                </span>
+                <span class="c14">
+                    zwracają się o wypłatę ekwiwalentu pieniężnego zgodnie z art. 15 ust. 1, 1a ustawy z dnia 17 grudnia 2021 r. o ochotniczych strażach pożarnych:
+                </span>
+            </li>
+        </ol>
+        <table class="c38">
+            <tr class="c31">
+                <td class="c20" colspan="1" rowspan="1">
+                    <p class="c9">
+                        <span class="c5">Lp.</span>
+                    </p>
+                </td>
+                <td class="c13" colspan="1" rowspan="1">
+                    <p class="c9">
+                        <span class="c5">Nazwisko i imię</span>
+                    </p>
+                </td>
+                <td class="c10" colspan="1" rowspan="1">
+                    <p class="c23">
+                        <span class="c14 c19">
+                            Czas udziału w
+                        </span>
+                        <span class="c14 c19 @(@isRescue ? null : "deleted")">
+                            działaniu ratowniczym,
+                        </span>
+                        <span class="c14 c19 deleted">
+                            akcji ratowniczej, zabezpieczeniu obszaru chronionego właściwej jednostki ratowniczo-gaśniczej Państwowej Straży Pożarnej,
+                        </span>
+                        <span class="c14 c19 @(@isRescue ? "deleted" : null)">szkoleniu, ćwiczeniu</span>
+                        <span class="c30 c14 c24 c19">1/</span>
+                    </p>
+                    <p class="c18">
+                        <span class="c5"></span>
+                    </p>
+                    <p class="c23">
+                        <span class="c5">(godzin / minut)</span>
+                    </p>
+                </td>
+                <td class="c11" colspan="1" rowspan="1">
+                    <p class="c23">
+                        <span class="c14 c19">
+                            Podpis biorącego udział w
+                        </span>
+                        <span class="c14 c19 @(@isRescue ? null : "deleted")">
+                            działaniu ratowniczym, 
+                        </span>
+                        <span class="c14 c19 deleted">
+                            akcji ratowniczej, zabezpieczeniu obszaru chronionego właściwej jednostki ratowniczo-gaśniczej Państwowej Straży Pożarnej,
+                        </span>
+                        <span class="c14 c19 @(@isRescue ? "deleted" : null)">szkoleniu, ćwiczeniu</span>
+                        <span class="c14 c24 c19 c30">1/</span>
+                    </p>
+                </td>
+            </tr>
+            @{int i = 1;}
+            @foreach (var item in Model.Members)
+            {
+            var parts = item.Split(' ', 2);
+            var last  = parts.Length > 0 ? parts[0] : "";
+            var first = parts.Length > 1 ? parts[1] : "";
+            <tr class="c8">
+                <td class="c20" colspan="1" rowspan="1">
+                    <p class="c9">
+                        <span class="c5">@i</span>
+                    </p>
+                </td>
+                <td class="c13" colspan="1" rowspan="1">
+                    <p class="c3">
+                        <span class="c0">@last @first</span>
+                    </p>
+                </td>
+                <td class="c10" colspan="1" rowspan="1">
+                    <p class="c3">
+                        <span class="c0">@duration</span>
+                    </p>
+                </td>
+                <td class="c11" colspan="1" rowspan="1">
+                    <p class="c3">
+                        <span class="c0"></span>
+                    </p>
+                </td>
+            </tr>
+            i++;
+            }
+        </table>
+        <p class="c4">
+            <span class="c0"></span>
+        </p>
+        <p class="c7 c28">
+            <span class="c0">3. Kwotę ekwiwalentu należy przelać na rachunek bankowy strażaka ratownika OSP podany w oświadczeniu.</span>
+        </p>
+        <p class="c26">
+            <span class="c0">
+                W załączeniu potwierdzenie Komendy Miejskiej Państwowej Straży Pożarnej w Bielsku-Białej udziału jednostki OSP w
+            </span>
+            <span class="c0 @(@isRescue ? null : "deleted")">
+                działaniu ratowniczym, 
+            </span>
+            <span class="c0 deleted">
+                akcji ratowniczej, zabezpieczeniu obszaru chronionego właściwej jednostki ratowniczo-gaśniczej Państwowej Straży Pożarnej, 
+            </span>
+            <span class="c0 @(@isTraining ? null : "deleted")">
+                szkoleniu, ćwiczeniu. 
+            </span>
+        </p>
+        <p class="c26">
+            <span class="c14 c24 c37">1/</span>
+            <span class="c14 c37">niepotrzebne skreślić</span>
+        </p>
+        <p class="c2 c40">
+            <span class="c0">@dots</span>
+        </p>
+        <p class="c23" style="text-align: right; margin-inline-end: 55px">
+            <span class="c15" style="font-size: 10px">(Podpis Naczelnika OSP)</span>
+        </p>
+    </body>
+</html>

@@ -5,136 +5,146 @@
              x:DataType="vm:RequestsViewModel"
              x:Name="Root">
 
-  <Grid>
-    <!-- Główna siatka: 3 wiersze -->
-    <TextBlock Text="{Binding Title}" Margin="100 40 0 0" FontSize="32" FontWeight="Bold"/>
-    <Grid RowDefinitions="Auto,* ,Auto" MaxWidth="1000">
-      <!-- 1) Formularz i wyszukiwanie -->
-      <StackPanel Grid.Row="0" Margin="0 150 0 15" Spacing="12">
+  <ScrollViewer>
+    <Grid>
+      <!-- Główna siatka: 3 wiersze -->
+      <TextBlock Text="{Binding Title}" Margin="100 40 0 0" FontSize="32" FontWeight="Bold"/>
+      <Grid RowDefinitions="Auto,* ,Auto" MaxWidth="1000">
+        <!-- 1) Formularz i wyszukiwanie -->
+        <StackPanel Grid.Row="0" Margin="0 150 0 15" Spacing="12">
 
-        <TextBlock Text="Adres zdarzenia" FontWeight="SemiBold" FontSize="16" />
-        <TextBox Watermark="Podaj adres zdarzenia"
-                 Text="{Binding Address, Mode=TwoWay}" />
+          <TextBlock Text="Adres zdarzenia" FontWeight="SemiBold" FontSize="16" />
+          <TextBox Watermark="Podaj adres zdarzenia"
+                   Text="{Binding Address, Mode=TwoWay}" />
+          
+          <TextBlock Text="Data zdarzenia"
+                     FontWeight="SemiBold"
+                     Margin="0,12,0,0"
+                     FontSize="16" />
 
-        <TextBlock Text="Czas trwania (hh:mm)" FontWeight="SemiBold" Margin="0 15 0 0" FontSize="16" />
-        <TextBox Watermark="Podaj czas trwania"
-                 Text="{Binding Duration, Mode=TwoWay}" />
-      </StackPanel>
+          <DatePicker
+            SelectedDate="{Binding EventDate, Mode=TwoWay}"
+            Width="400"
+          />
 
-      <!-- 2) Dwie kolumny: Dostępni vs Wybrani -->
-      <Grid Grid.Row="1" Margin="0 20 0 0" ColumnDefinitions="*,*" ColumnSpacing="20">
-        <!-- Lewa kolumna: dostępni -->
-        <StackPanel Grid.Column="0" Spacing="12">
-          <TextBlock Text="Wybierz ratowników" FontWeight="SemiBold" FontSize="16" />
-          <TextBox Watermark="Imię i nazwisko"
-                   Text="{Binding SearchText, Mode=TwoWay}"/>
-          <ListBox ItemsSource="{Binding FilteredMembers}"
-                   Height="350" BorderThickness="1" CornerRadius="12" BorderBrush="#CCC">
-            <ListBox.ItemTemplate>
-              <DataTemplate>
-                <Button Command="{Binding DataContext.AddMemberCommand, ElementName=Root}"
-                        CommandParameter="{Binding}"
-                        Padding="10"
-                        HorizontalContentAlignment="Stretch"
-                        Cursor="Hand"
-                        MinWidth="250"
-                        Background="White"
-                        BorderThickness="1"
-                        CornerRadius="10"
-                        BorderBrush="#CCC"
+          <TextBlock Text="Czas trwania (hh:mm)" FontWeight="SemiBold" Margin="0 15 0 0" FontSize="16" />
+          <TextBox Watermark="Podaj czas trwania"
+                   Text="{Binding Duration, Mode=TwoWay}" />
+        </StackPanel>
+
+        <!-- 2) Dwie kolumny: Dostępni vs Wybrani -->
+        <Grid Grid.Row="1" Margin="0 20 0 0" ColumnDefinitions="*,*" ColumnSpacing="20">
+          <!-- Lewa kolumna: dostępni -->
+          <StackPanel Grid.Column="0" Spacing="12">
+            <TextBlock Text="Wybierz ratowników" FontWeight="SemiBold" FontSize="16" />
+            <TextBox Watermark="Imię i nazwisko"
+                     Text="{Binding SearchText, Mode=TwoWay}"/>
+            <ListBox ItemsSource="{Binding FilteredMembers}"
+                     Height="350" BorderThickness="1" CornerRadius="12" BorderBrush="#CCC">
+              <ListBox.ItemTemplate>
+                <DataTemplate>
+                  <Button Command="{Binding DataContext.AddMemberCommand, ElementName=Root}"
+                          CommandParameter="{Binding}"
+                          Padding="10"
+                          HorizontalContentAlignment="Stretch"
+                          Cursor="Hand"
+                          MinWidth="250"
+                          Background="White"
+                          BorderThickness="1"
+                          CornerRadius="10"
+                          BorderBrush="#CCC"
+                          >
+                    <StackPanel Orientation="Horizontal">
+                      <TextBlock Text="{Binding FirstName}" FontSize="16"/>
+                      <TextBlock Text=" "/>
+                      <TextBlock Text="{Binding LastName}"  FontSize="16"/>
+                    </StackPanel>
+                  </Button>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+          </StackPanel>
+
+          <!-- Prawa kolumna: wybrani -->
+          <StackPanel Grid.Column="1" Spacing="2">
+            <TextBlock Text="Wybrani ratownicy" FontWeight="SemiBold" FontSize="16" Margin="0 0 0 13" />
+            <ListBox ItemsSource="{Binding SelectedMembers}"
+                     Height="390" BorderThickness="1" CornerRadius="12" BorderBrush="#CCC" >
+              <ListBox.ItemTemplate>
+                <DataTemplate>
+                  <Border BorderThickness="1" CornerRadius="10" BorderBrush="#CCC" Background="White" HorizontalAlignment="Stretch">
+                    <Grid HorizontalAlignment="Stretch">
+                      <Grid.ColumnDefinitions>
+                        <!-- Lewa kolumna rozciąga się na całą dostępną szerokość -->
+                        <ColumnDefinition Width="*"/>
+                        <!-- Prawa kolumna auto dopasowuje się do przycisku -->
+                        <ColumnDefinition Width="Auto"/>
+                      </Grid.ColumnDefinitions>
+
+                      <!-- Imię i nazwisko w lewej kolumnie -->
+                      <TextBlock
+                        Grid.Column="0"
+                        Padding="16,8"
+                        VerticalAlignment="Center"
+                        FontSize="16"
                         >
-                  <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding FirstName}" FontSize="16"/>
-                    <TextBlock Text=" "/>
-                    <TextBlock Text="{Binding LastName}"  FontSize="16"/>
-                  </StackPanel>
-                </Button>
-              </DataTemplate>
-            </ListBox.ItemTemplate>
-          </ListBox>
-        </StackPanel>
+                        <Run Text="{Binding FirstName} "/>
+                        <Run Text="{Binding LastName}"/>
+                      </TextBlock>
 
-        <!-- Prawa kolumna: wybrani -->
-        <StackPanel Grid.Column="1" Spacing="2">
-          <TextBlock Text="Wybrani ratownicy" FontWeight="SemiBold" FontSize="16" Margin="0 0 0 13" />
-          <ListBox ItemsSource="{Binding SelectedMembers}"
-                   Height="390" BorderThickness="1" CornerRadius="12" BorderBrush="#CCC" >
-            <ListBox.ItemTemplate>
-              <DataTemplate>
-                <Border BorderThickness="1" CornerRadius="10" BorderBrush="#CCC" Background="White" HorizontalAlignment="Stretch">
-                  <Grid HorizontalAlignment="Stretch">
-                    <Grid.ColumnDefinitions>
-                      <!-- Lewa kolumna rozciąga się na całą dostępną szerokość -->
-                      <ColumnDefinition Width="*"/>
-                      <!-- Prawa kolumna auto dopasowuje się do przycisku -->
-                      <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <!-- Imię i nazwisko w lewej kolumnie -->
-                    <TextBlock
-                      Grid.Column="0"
-                      Padding="16,8"
-                      VerticalAlignment="Center"
-                      FontSize="16"
-                      >
-                      <Run Text="{Binding FirstName} "/>
-                      <Run Text="{Binding LastName}"/>
-                    </TextBlock>
-
-                    <!-- Przycisk Usuń w prawej kolumnie, przy samej krawędzi -->
-                    <Button
-                      Grid.Column="1"
-                      Content="Usuń"
-                      Command="{Binding DataContext.RemoveMemberCommand, ElementName=Root}"
-                      CommandParameter="{Binding}"
-                      Width="80" Height="28"
-                      VerticalAlignment="Center"
-                      HorizontalAlignment="Right"
-                      HorizontalContentAlignment="Center"
-                      CornerRadius="6"
-                      Cursor="Hand"
-                      Background="#3C6FD2"
-                      Foreground="White"
-                      FontSize="12"
-                      Margin="0,0,10,0"/>
-                  </Grid>
-                </Border>
-              </DataTemplate>
-            </ListBox.ItemTemplate>
-          </ListBox>
-        </StackPanel>
-        
-        <Button 
-                Grid.Column="1"
-                Content="Wygeneruj wniosek"
-                Command="{Binding GenerateReportCommand}"
-                HorizontalAlignment="Right"
-                Margin="0 40 0 0"
-                Width="200" Height="55"
-                VerticalContentAlignment="Center" HorizontalContentAlignment="Center" CornerRadius="8" Cursor="Hand" Background="#3C6FD2" Foreground="White" FontSize="16"
-        >
-          <Button.Effect>
-            <DropShadowEffect
-              Color="#33636363"
-              BlurRadius="8"
-              OffsetX="0"
-              OffsetY="2"
-              Opacity="1" />
-          </Button.Effect>
-        </Button>
+                      <!-- Przycisk Usuń w prawej kolumnie, przy samej krawędzi -->
+                      <Button
+                        Grid.Column="1"
+                        Content="Usuń"
+                        Command="{Binding DataContext.RemoveMemberCommand, ElementName=Root}"
+                        CommandParameter="{Binding}"
+                        Width="80" Height="28"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        HorizontalContentAlignment="Center"
+                        CornerRadius="6"
+                        Cursor="Hand"
+                        Background="#3C6FD2"
+                        Foreground="White"
+                        FontSize="12"
+                        Margin="0,0,10,0"/>
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+            <Button 
+              Content="Wygeneruj wniosek"
+              Command="{Binding GenerateReportCommand}"
+              HorizontalAlignment="Right"
+              Margin="0 40 0 0"
+              Width="200" Height="55"
+              VerticalContentAlignment="Center" HorizontalContentAlignment="Center" CornerRadius="8" Cursor="Hand" Background="#3C6FD2" Foreground="White" FontSize="16"
+            >
+              <Button.Effect>
+                <DropShadowEffect
+                  Color="#33636363"
+                  BlurRadius="8"
+                  OffsetX="0"
+                  OffsetY="2"
+                  Opacity="1" />
+              </Button.Effect>
+            </Button>
+          </StackPanel>
+        </Grid>
       </Grid>
-    </Grid>
 
-    <!-- Warstwa toast -->
-    <Border Background="#DD333333"
-            CornerRadius="4"
-            Padding="10,6"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Top"
-            Margin="25"
-            IsVisible="{Binding ShowNotification}">
-      <TextBlock Text="{Binding NotificationMessage}"
-                 Foreground="White"/>
-    </Border>
-  </Grid>
+      <!-- Warstwa toast -->
+      <Border Background="#DD333333"
+              CornerRadius="4"
+              Padding="10,6"
+              HorizontalAlignment="Right"
+              VerticalAlignment="Top"
+              Margin="25"
+              IsVisible="{Binding ShowNotification}">
+        <TextBlock Text="{Binding NotificationMessage}"
+                   Foreground="White"/>
+      </Border>
+    </Grid>
+  </ScrollViewer>
 </UserControl>
